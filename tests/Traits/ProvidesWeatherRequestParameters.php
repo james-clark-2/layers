@@ -27,7 +27,8 @@ trait ProvidesWeatherRequestParameters
             ['abc', 'abc', 'us', ['latitude', 'longitude']],
             ['123abc', '123abc', 'us', ['latitude', 'longitude']],
             [0, 0, 'not a valid unit', ['units']],
-            ['abc', 'abc', 'not a valid unit', ['latitude', 'longitude', 'units']]
+            ['abc', 'abc', 'not a valid unit', ['latitude', 'longitude', 'units']],
+            [999, 999, 'us', ['latitude', 'longitude']]
         ];
     }
 }

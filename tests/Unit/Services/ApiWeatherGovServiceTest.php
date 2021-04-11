@@ -3,7 +3,9 @@
 namespace Tests\Unit\Services;
 
 use App\Services\ApiWeatherGovService;
+use Illuminate\Http\Client\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -54,6 +56,24 @@ class ApiWeatherGovServiceTest extends TestCase
 
         $this->assertIsArray($result);
         $this->assertEmpty($result);
+    }
+
+    public function test_it_applies_a_user_agent_to_all_service_api_requests()
+    {
+        Config::set('api_weather_gov.user_agent', 'foo');
+
+        Http::fake([
+            'api.weather.gov/*' => Http::sequence()
+                ->push($this->getJsonFixture('weather.gov/points_result.json'))
+                ->push($this->getJsonFixture('weather.gov/hourly_forecast.json'))
+        ]);
+
+        app(ApiWeatherGovService::class)->getHourlyForecastForLatLong(0, 0);
+
+        //Asserts that all requests sent while the facade was faked contain the user agent
+        Http::assertSent(fn (Request $request) =>
+            $request->hasHeader('User-Agent', Config::get('api_weather_gov.user_agent'))
+        );
     }
 }
 

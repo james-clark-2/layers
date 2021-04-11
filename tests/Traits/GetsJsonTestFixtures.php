@@ -10,16 +10,16 @@ trait GetsJsonTestFixtures
 {
     public function getJsonFixture(string $path): ?string
     {
-        return file_get_contents(__DIR__.'/Fixtures/'.ltrim($path, '/'));
+        return file_get_contents(base_path('tests/Fixtures/'.ltrim($path, '/')));
     }
 
     public function getJsonFixtureAsArray(string $path): ?array
     {
-        return json_decode(file_get_contents(__DIR__.'/Fixtures/'.ltrim($path, '/')), true);
+        return json_decode($this->getJsonFixture($path), true);
     }
 
     public function getJsonFixtureAsObject(string $path): ?\stdClass
     {
-        return json_decode(file_get_contents(__DIR__.'/Fixtures/'.ltrim($path, '/')));
+        return json_decode($this->getJsonFixture($path));
     }
 }

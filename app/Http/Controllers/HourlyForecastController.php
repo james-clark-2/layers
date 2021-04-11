@@ -14,8 +14,8 @@ class HourlyForecastController extends Controller
     public function get(Request $request)
     {
         $request->validate([
-            'latitude' => 'required|numeric',
-            'longitude' => 'required|numeric',
+            'latitude' => 'required|numeric|min:-180|max:180',
+            'longitude' => 'required|numeric|min:-180|max:180',
             'units' => 'in:us,si'
         ]);
 
