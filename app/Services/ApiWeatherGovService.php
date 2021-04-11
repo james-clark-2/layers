@@ -23,13 +23,14 @@ class ApiWeatherGovService implements WeatherForecastServiceInterface
     public function getHourlyForecastForLatLong(float $latitude, float $longitude, bool $fahrenheit = true): array
     {
         //Query points endpoint for hourly forecast url based on forecast area that contains latitude, longitude
-        $hourlyUrl = Http::withHeaders(['User-Agent' => $this->userAgent])
-            ->get($this->url . '/' . $latitude . ',' . $longitude)
+        $hourlyUrl = Http::baseUrl($this->url)
+            ->withUserAgent($this->userAgent)
+            ->get($latitude . ',' . $longitude)
             ->json('properties.forecastHourly');
 
         //Query hourly endpoint for forecast
         return $hourlyUrl ?
-            Http::withHeaders(['User-Agent' => $this->userAgent])
+            Http::withUserAgent($this->userAgent)
                 ->get($hourlyUrl, ['units' => $fahrenheit ? 'us' : 'si'])
                 ->json('properties.periods', []) :
             [];
