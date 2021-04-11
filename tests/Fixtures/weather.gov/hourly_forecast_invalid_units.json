@@ -1,0 +1,8 @@
+{
+    "correlationId": "6d3372e2-2eb4-4964-a642-51d96f1d680f",
+    "title": "Invalid Parameter",
+    "type": "https://api.weather.gov/problems/InvalidParameter",
+    "status": 400,
+    "detail": "Parameter \"units\" is invalid: This value does not match any of the valid values.",
+    "instance": "https://api.weather.gov/requests/6d3372e2-2eb4-4964-a642-51d96f1d680f"
+}
