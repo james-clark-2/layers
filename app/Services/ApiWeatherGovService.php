@@ -19,7 +19,7 @@ class ApiWeatherGovService implements WeatherForecastServiceInterface
     {
         //Query points endpoint for hourly forecast url based on forecast area that contains latitude, longitude
         $hourlyUrl = Http::withHeaders(['User-agent' => 'Test'])
-            ->get($this->url . '/' . ($latitude % 180).','.($longitude % 180))
+            ->get($this->url . '/' . fmod($latitude, 180.0) . ',' . fmod($longitude, 180.0))
             ->json('properties.forecastHourly');
 
         //Query hourly endpoint for forecast
