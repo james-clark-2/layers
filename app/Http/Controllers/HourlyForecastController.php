@@ -2,23 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Services\Contracts\WeatherLookupServiceInterface;
+use App\Services\Contracts\WeatherForecastServiceInterface;
 use Illuminate\Http\Request;
 
 class HourlyForecastController extends Controller
 {
     public function __construct(
-        protected WeatherLookupServiceInterface $weatherService
+        protected WeatherForecastServiceInterface $weatherService
     ) { }
 
-    public function get(Request $request, string $cityName, string $stateCode, string $countryCode)
+    public function get(Request $request)
     {
         $request->validate([
-            'cityName' => 'required|string',
-            'countryCode' => 'required|string',
-            'stateCode' => 'required|string'
+            'latitude' => 'required|numeric',
+            'longitude' => 'required|numeric',
+            'units' => 'in:us,si'
         ]);
 
-        return $this->weatherService->getHourlyForecast($cityName, $stateCode, $countryCode);
+        return $this->weatherService->getHourlyForecastForLatLong(
+            $request->get('latitude'),
+            $request->get('longitude'),
+            strtolower($request->get('units')) === 'us'
+        );
     }
 }

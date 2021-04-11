@@ -3,8 +3,9 @@
 namespace App\Providers;
 
 use App\Http\Controllers\HourlyForecastController;
-use App\Services\Contracts\WeatherLookupServiceInterface;
-use App\Services\OpenWeatherMapService;
+use App\Services\ApiWeatherGovService;
+use App\Services\Contracts\WeatherForecastServiceInterface;
+use App\Services\WeatherbitIoService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -27,7 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         app()->when(HourlyForecastController::class)
-            ->needs(WeatherLookupServiceInterface::class)
-            ->give(OpenWeatherMapService::class);
+            ->needs(WeatherForecastServiceInterface::class)
+            ->give(ApiWeatherGovService::class);
     }
 }
