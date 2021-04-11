@@ -17,5 +17,5 @@ use Illuminate\Support\Facades\Route;
 //Route::middleware('auth:api')->get('/user', function (Request $request) {
 //    return $request->user();
 //});
-
-Route::get('/weather/{countryCode}/{cityName}/{stateCode}', [\App\Http\Controllers\HourlyForecastController::class, 'get']);
+Route::get('/', fn () => ['status' => 'OK']);
+Route::get('/weather', [\App\Http\Controllers\HourlyForecastController::class, 'get']);
