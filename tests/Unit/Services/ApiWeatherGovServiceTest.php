@@ -60,6 +60,8 @@ class ApiWeatherGovServiceTest extends TestCase
 
     public function test_it_returns_no_forecast_periods_when_the_third_party_api_throws_500()
     {
+        //TODO: This may change to a generic error message when api.weather.gov is down
+        //TODO: Assert errors are logged here
         Http::fake([
             'api.weather.gov/*' => Http::response($this->getJsonFixture('weather.gov/500.json'), 500)
         ]);
